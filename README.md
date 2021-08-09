@@ -58,3 +58,9 @@ Optional Form Parameters:
 * ```shipping_address_province``` - Shipping Province
 * ```shipping_address_country``` - Shipping Country (LKA)  
 * ```shipping_address_postcode``` - Shipping Postal Code 
+
+
+In Request, checkValue is a combination of merchantKey, invoiceId, amount, currency parameter set in a predefined sequence given by PAYable which then encrypted with merchantToken (a unique Secret value for the Merchant which was shared by PAYable) using SHA-512. 
+Format:
+```UPPERCASE(SHA512[<merchant_key>|<invoice_id>|<amount>|<currency_code>|UPPERCASE(SHA512[<merchant_Token>])])```
+
