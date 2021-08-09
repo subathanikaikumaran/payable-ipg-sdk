@@ -104,3 +104,57 @@ Format:
      </body>
     </html>
 ```
+
+Submit Form data into Payable
+
+```
+    function returnForm() {
+        var payment = $('#myform').serializeArray().reduce(function(obj, item) {
+            obj[item.name] = item.value;
+            return obj;
+        }, {});
+        payable.startPayment(payment);
+    }
+
+```
+
+```
+    window.addEventListener('load', function() {   
+
+    });
+
+```
+
+```
+   payable.onCompleted = function onCompleted(data) {
+        console.log("Payment completed")
+    };
+
+```
+
+
+```
+   payable.onDismissed = function onDismissed() {
+        log("Payment Cancel");
+    };
+
+```
+
+
+```
+   payable.onError = function onError(error) {
+        if (error.code === 3009) { // field validation error
+            error.fields.forEach((field) => {
+                console.log(field.error)
+            });
+        }
+        if (error.code === 3008) { // mpgs error callback
+            console.log(error)
+        }
+        if (error.code === 3007) { // timeout error
+            console.log(error)
+        }
+    };
+
+```
+
