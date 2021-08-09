@@ -61,6 +61,46 @@ Optional Form Parameters:
 
 
 In Request, checkValue is a combination of merchantKey, invoiceId, amount, currency parameter set in a predefined sequence given by PAYable which then encrypted with merchantToken (a unique Secret value for the Merchant which was shared by PAYable) using SHA-512. 
+
 Format:
+
 ```UPPERCASE(SHA512[<merchant_key>|<invoice_id>|<amount>|<currency_code>|UPPERCASE(SHA512[<merchant_Token>])])```
 
+##### Sample HTML Code
+
+```
+   <html>
+     <head>
+      <title>ABC Fashion</title>
+      <script src="https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout-sandbox.js"></script>
+      </head>
+    <body>
+    <form method="post">
+        <input type="hidden" name="notify_url" value="https://yoursite.com/payment/nortify" />
+        <input type="hidden" name="return_url" value="https://yoursite.com/payment/return" />
+        <input type="hidden" name="cancel_url" value="https://yoursite.com/payment/cancel" />
+        <input type="hidden" name="merchant_key" id="merchant_key" value="D75XXXXXXXXX" />
+        <input type="hidden" name="check_value" id="check_value" value="A8907A75XXXXXXXXXXXXXXXXXXX" />
+
+        <h3>Payment Details</h3>
+        <input type="text" name="invoice_id" id="invoice_id" value="INV0002301">
+        <input type="text" name="order_description" id="order_description" value="Payment for abc Fashion">
+        <input type="text" name="amount" id="amount" value="999.12" />
+        <input type="hidden" name="currency_code" id="currency_code" value="LKR" />
+
+        <h3>Customer Details</h3>
+        <input type="text" id="customer_first_name" name="customer_first_name" value="Shakthi" />
+        <input type="text" id="customer_last_name" name="customer_last_name" value="Elon" />
+        <input type="text" id="customer_mobile_phone" name="customer_mobile_phone" value="94XXXXXXXXX" />
+        <input type="text" name="customer_phone" id="customer_phone" value="94XXXXXXXXX"  />
+        <input type="email" id="customer_email" name="customer_email" value="test@gmail.com" />
+        <input type="text" id="billing_address_street" name="billing_address_street" value="154"/>
+        <input type="text" name="billing_address_city" id="billing_address_city" value="Vavuniya">
+        <input type="text" name="billing_address_province" id="billing_address_province" value="North Province">
+        <input type="hidden" name="billing_address_country" id="billing_address_country" value="LKA">
+        <input type="text" name="billing_address_postcode" id="billing_address_postcode" value="43000">
+        <input type="submit" value="PAY Now">
+       </form>
+     </body>
+    </html>
+```
