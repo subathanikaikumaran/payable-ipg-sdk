@@ -66,43 +66,66 @@ Format:
 
 `UPPERCASE(SHA512[<merchant_key>|<invoice_id>|<amount>|<currency_code>|UPPERCASE(SHA512[<merchant_Token>])])`
 
-##### Sample HTML Form Code
+##### Sample HTML Form
 
 ```
-   <html>
-     <head>
-      <title>ABC Fashion</title>
-      <script src="https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout-sandbox.js"></script>
-      </head>
-    <body>
+<html>
+<head>
+    <title>Karl Fashion</title>
+    <script src="https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout-sandbox.js"></script>
+</head>
+
+<body>
     <form method="post">
-        <input type="hidden" name="notify_url" value="https://yoursite.com/payment/nortify" />
-        <input type="hidden" name="return_url" value="https://yoursite.com/payment/return" />
-        <input type="hidden" name="cancel_url" value="https://yoursite.com/payment/cancel" />
+        <!-- Replace your merchant_key,notify_url,return_url,cancel_url and check_value -->
+        <input type="hidden" name="notify_url" id="notify_url" value="https://yoursite.com/payment/nortify" />
+        <input type="hidden" name="return_url" id="return_url" value="https://yoursite.com/payment/return" />
+        <input type="hidden" name="cancel_url" id="cancel_url" value="https://yoursite.com/payment/cancel" />
         <input type="hidden" name="merchant_key" id="merchant_key" value="D75XXXXXXXXX" />
         <input type="hidden" name="check_value" id="check_value" value="A8907A75XXXXXXXXXXXXXXXXXXX" />
+        <input type="hidden" name="custom_1" id="custom_1" value="test value" />
+        <input type="hidden" name="custom_2" id="custom_2" value="test value" />
 
         <h3>Payment Details</h3>
-        <input type="text" name="invoice_id" id="invoice_id" value="INV0002301">
-        <input type="text" name="order_description" id="order_description" value="Payment for abc Fashion">
+        <input type="text" name="invoice_id" id="invoice_id" value="INV0002301" />
+        <input type="text" name="order_description" id="order_description" value="Payment for abc Fashion" />
         <input type="text" name="amount" id="amount" value="999.12" />
         <input type="hidden" name="currency_code" id="currency_code" value="LKR" />
 
         <h3>Customer Details</h3>
-        <input type="text" id="customer_first_name" name="customer_first_name" value="Shakthi" />
-        <input type="text" id="customer_last_name" name="customer_last_name" value="Elon" />
-        <input type="text" id="customer_mobile_phone" name="customer_mobile_phone" value="94XXXXXXXXX" />
-        <input type="text" name="customer_phone" id="customer_phone" value="94XXXXXXXXX"  />
-        <input type="email" id="customer_email" name="customer_email" value="test@gmail.com" />
-        <input type="text" id="billing_address_street" name="billing_address_street" value="154"/>
-        <input type="text" name="billing_address_city" id="billing_address_city" value="Vavuniya">
-        <input type="text" name="billing_address_province" id="billing_address_province" value="North Province">
-        <input type="hidden" name="billing_address_country" id="billing_address_country" value="LKA">
-        <input type="text" name="billing_address_postcode" id="billing_address_postcode" value="43000">
+        <input type="text" name="customer_first_name" id="customer_first_name" value="Shakthi" />
+        <input type="text" name="customer_last_name" id="customer_last_name" value="Elon" />
+        <input type="text" name="customer_mobile_phone" id="customer_mobile_phone" value="94XXXXXXXXX" />
+        <input type="text" name="customer_phone" id="customer_phone" value="94XXXXXXXXX" />
+        <input type="email" name="customer_email" id="customer_email" value="testbillmail@gmail.com" />
+
+        <h3>Billing Details</h3>
+        <input type="text" name="billing_address_street" id="billing_address_street" value="154" />
+        <input type="text" name="billing_address_street2" id="billing_address_street2" value="Main Road" />
+        <input type="text" name="billing_address_company" id="billing_address_company" value="Test" />
+        <input type="text" name="billing_address_city" id="billing_address_city" value="Vavuniya" />
+        <input type="text" name="billing_address_province" id="billing_address_province" value="North Province" />
+        <input type="hidden" name="billing_address_country" id="billing_address_country" value="LKA" />
+        <input type="text" name="billing_address_postcode" id="billing_address_postcode" value="43000" />
+
+        <h3>Shipping Details</h3>
+        <input type="text" name="shipping_contact_first_name" id="shipping_contact_first_name" value="Kumar" />
+        <input type="text" name="shipping_contact_last_name" id="shipping_contact_last_name" value="Shiva" />
+        <input type="text" name="shipping_contact_phone" id="shipping_contact_phone" value="94XXXXXXXXX" />
+        <input type="text" name="shipping_contact_mobile" id="shipping_contact_mobile" value="94XXXXXXXXX" />
+        <input type="email" name="shipping_contact_email" id="shipping_contact_email" value="testshipmail@gmail.com" />
+        <input type="text" name="shipping_address_company" id="shipping_address_company" value="Payable" />
+        <input type="text" name="shipping_address_street" id="shipping_address_street" value="Main Street" />
+        <input type="text" name="shipping_address_street2" id="shipping_address_street2" value="Temple Road" />
+        <input type="text" name="shipping_address_city" id="shipping_address_city" value="Colombo" />
+        <input type="text" name="shipping_address_province" id="shipping_address_province" value="western province" />
+        <input type="hidden" name="shipping_address_country" id="shipping_address_country" value="LKA" />
+        <input type="text" name="shipping_address_postcode" id="shipping_address_postcode" value="40000" />
+
         <input type="submit" value="PAY Now">
-       </form>
-     </body>
-    </html>
+    </form>
+</body>
+</html>
 ```
 
 Submit your form json data into Payable
@@ -162,7 +185,7 @@ You can get the error details from `onError`. Error will be field validation (30
 
 ```
 
-##### Sample HTML Code
+##### Sample Code
 
 ```
 <html>
@@ -197,30 +220,30 @@ You can get the error details from `onError`. Error will be field validation (30
         });
 
         function returnForm() {
-            var payment = {
+            var payment = {                
+                cancel_url: "https://yoursite.com/payment/cancel",
+                return_url: "https://yoursite.com/payment/return",
+                notify_url: "https://yoursite.com/payment/nortify",
+                merchant_key: "D7XXXXXXXXX",
+                check_value: "C6FXXXXXXXXXXXXXXXXXXXXXX",
                 amount: "59.91",
+                invoice_id: "INVvw5EA0d1pH",            
+                order_description: "Payment for abc Fashion",
+                currency_code: "LKR",
+                custom_1: "customYuDSFk5Z1O",
+                custom_2: "test2",
+                customer_email: "testmail@gmail.com",
+                customer_first_name: "Shakthi",
+                customer_last_name: "Elon",
+                customer_mobile_phone: "07XXXXXXXX",
+                customer_phone: "07XXXXXXXX",
                 billing_address_city: "Vavuniya",
                 billing_address_company: "Pay Shop",
                 billing_address_country: "LKA",
                 billing_address_postcode: "43000",
                 billing_address_province: "North Province",
                 billing_address_street: "154",
-                billing_address_street2: "Koomankulam",
-                cancel_url: "https://yoursite.com/payment/cancel",
-                check_value: "C6FXXXXXXXXXXXXXXXXXXXXXX",
-                currency_code: "LKR",
-                custom_1: "customYuDSFk5Z1O",
-                custom_2: "test2",
-                customer_email: "testmail@gmail.com",
-                customer_first_name: "Shakthi",
-                customer_last_name: "Laxmy",
-                customer_mobile_phone: "07XXXXXXXX",
-                customer_phone: "07XXXXXXXX",
-                invoice_id: "INVvw5EA0d1pH",
-                merchant_key: "D7XXXXXXXXX",
-                notify_url: "https://yoursite.com/payment/nortify",
-                order_description: "Sandbox payment",
-                return_url: "https://yoursite.com/payment/return",
+                billing_address_street2: "Koomankulam", 
                 shipping_address_city: "Colombo",
                 shipping_address_company: "Payable",
                 shipping_address_country: "LKA",
