@@ -319,13 +319,13 @@ your script on `notify_url` & then show the payment status to the customer in th
 - `statusCode` - Payment status code (1 - if payment is SUCCESS, 2- if payment is FAILURE)
 - `statusMessage` - Message received from payment gateway which the customer tried to pay
 - `paymentType` - Payment type selected during the Checkout
-    1 - CARD (SUPPORTED)
-    2 - BANKING (Not implemented yet)
-    3 - WALLET (Not implemented yet)
+    1. CARD (SUPPORTED)
+    2. BANKING (Not implemented yet)
+    3. WALLET (Not implemented yet)
 - `paymentMethod` - Payment method selected during the Checkout
-    1 - VISA / MASTERCARD / CUP(Visa and Mastercard are SUPPORTED / CUP Not implemented Yet)
-    2 - AMEX / DINERS CLUB / DISCOVER (Not implemented yet)
-    3 - SAMPATH VISHWA (Not implemented yet)
+    1. VISA / MASTERCARD / CUP(Visa and Mastercard are SUPPORTED / CUP Not implemented Yet)
+    2. AMEX / DINERS CLUB / DISCOVER (Not implemented yet)
+    3. SAMPATH VISHWA (Not implemented yet)
 - `paymentScheme` - Payment scheme selected by the customer (VISA / MASTERCARD)
 - `custom1` - Custom param 1 sent by merchant to Checkout page
 - `custom2` - Customparam 2 sent by merchant to Checkout page
