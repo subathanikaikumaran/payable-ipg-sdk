@@ -279,10 +279,10 @@ loads to the browser as it's a server callback. You can only test it by updating
 fetching the notification.
 - It cannot test the payment notification on localhost. You need to submit a publicly accessible IP or 
 domain based URL as your `notify_url` is to directly notify your server.
-- No payment status parameters are passed to the `notify_url` when redirecting the customer 
+- No payment status parameters are passed to the `return_url` when redirecting the customer 
 back to the Merchant’s website. You need to update your database upon fetching payment status by 
 your script on `notify_url` & then show the payment status to the customer in the page on 
-`notify_url` by fetching the status from your database.
+`return_url` by fetching the status from your database.
 
 
 ##### Server callback Json
