@@ -3,6 +3,7 @@
 Payable IPG SDK helps to integrate the payment gateway of your website.
 
 <hr>
+
 ### Version V1.0.2.1
 
 #### The Payable Payment Gateway Integration
@@ -18,6 +19,8 @@ Payable Checkout URL:
 
 ```
 Sandbox: https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout-sandbox.js
+
+Live: Coming soon.
 ```
 
 Required Form Parameters:
@@ -268,6 +271,9 @@ You can get the error details from `onError`. Error will be field validation (30
 </html>
 ```
 
-Listening to Payment Notification
+#### Payment Notification
 
-Payable Payment Gateway will send back to your website notifies the payment status to the notify_url
+Payable Payment Gateway will send back to your website notifies the payment status to the notify_url. You need to get the request and send the response.
+
+
+
