@@ -60,13 +60,13 @@ Optional Form Parameters:
 * ```shipping_address_postcode``` - Shipping Postal Code 
 
 
-In Request, checkValue is a combination of merchantKey, invoiceId, amount, currency parameter set in a predefined sequence given by PAYable which then encrypted with merchantToken (a unique Secret value for the Merchant which was shared by PAYable) using SHA-512. 
+In Request, ```check_value``` is a combination of merchantKey, invoiceId, amount, currency parameter set in a predefined sequence given by PAYable which then encrypted with merchantToken (a unique Secret value for the Merchant which was shared by PAYable) using SHA-512. 
 
 Format:
 
 ```UPPERCASE(SHA512[<merchant_key>|<invoice_id>|<amount>|<currency_code>|UPPERCASE(SHA512[<merchant_Token>])])```
 
-##### Sample HTML Code
+##### Sample HTML Form Code
 
 ```
    <html>
@@ -105,18 +105,18 @@ Format:
     </html>
 ```
 
-Submit Form data into Payable
+Submit your form json data into Payable
 
 ```
-    function returnForm() {
-        var payment = $('#myform').serializeArray().reduce(function(obj, item) {
-            obj[item.name] = item.value;
-            return obj;
-        }, {});
-        payable.startPayment(payment);
+    function returnForm(form_jsondata) {
+        payable.startPayment(form_jsondata);
     }
 
 ```
+
+##### Listening to Payable Payment Gateway
+
+Once you connect to Payable Payment Gateway, You can listen sdk response.
 
 ```
     window.addEventListener('load', function() {   
@@ -125,6 +125,8 @@ Submit Form data into Payable
 
 ```
 
+As soon as the payment is processed, You can get the payment status.
+
 ```
    payable.onCompleted = function onCompleted(data) {
         console.log("Payment completed")
@@ -132,6 +134,7 @@ Submit Form data into Payable
 
 ```
 
+If the payment gateway dismissed you can get the connection status.
 
 ```
    payable.onDismissed = function onDismissed() {
@@ -140,6 +143,7 @@ Submit Form data into Payable
 
 ```
 
+You can get the error details from ```onError```. Error will be field validation (3009), Gateway callback error (3008) and timeout error (3007). 
 
 ```
    payable.onError = function onError(error) {
@@ -158,3 +162,88 @@ Submit Form data into Payable
 
 ```
 
+##### Sample HTML Code
+
+```
+   <html>
+<head>
+    <title>Karl Fashion</title>
+    <script src="https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout-sandbox.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+
+            payable.onCompleted = function onCompleted(data) {
+                console.log("Payment completed");
+            };
+
+            payable.onDismissed = function onDismissed() {
+                console.log("Payment Cancel");
+            };
+
+
+            payable.onError = function onError(error) {
+                if (error.code === 3009) { // field validation error                        
+                    error.fields.forEach((field) => {
+                        console.log(field.error)
+                    });
+                }
+                if (error.code === 3008) { // mpgs error callback
+                    console.log(error)
+                }
+                if (error.code === 3007) { // timeout error
+                    console.log(error)
+                }
+            };
+        });
+
+        function returnForm() {
+            var payment = {
+                amount: "59.91",
+                billing_address_city: "Vavuniya",
+                billing_address_company: "Pay Shop",
+                billing_address_country: "LKA",
+                billing_address_postcode: "43000",
+                billing_address_province: "North Province",
+                billing_address_street: "154",
+                billing_address_street2: "Koomankulam",
+                cancel_url: "https://yoursite.com/payment/cancel",
+                check_value: "C6F216102CDC98CEB8D3B92C43DDBC2A0312BA93E1C541271F396A4A158596353774567D6B9D6C895242F1362C17D24FDAC85E6D7A7EC863D69C16026BA293CB",
+                currency_code: "LKR",
+                custom_1: "customYuDSFk5Z1O",
+                custom_2: "test2",
+                customer_email: "testmail@gmail.com",
+                customer_first_name: "Shakthi",
+                customer_last_name: "Laxmy",
+                customer_mobile_phone: "0774444444",
+                customer_phone: "496925511337",
+                invoice_id: "INVvw5EA0d1pH",
+                merchant_key: "D75BDF7DD35AD111",
+                notify_url: "https://yoursite.com/payment/nortify",
+                order_description: "Sandbox payment",
+                return_url: "https://yoursite.com/payment/return",
+                shipping_address_city: "Colombo",
+                shipping_address_company: "Payable",
+                shipping_address_country: "LKA",
+                shipping_address_postcode: "43000",
+                shipping_address_province: "western province",
+                shipping_address_street: "Main street",
+                shipping_address_street2: "Temple road",
+                shipping_contact_email: "testshipmail@gmail.com",
+                shipping_contact_first_name: "Kumaran",
+                shipping_contact_last_name: "Test Lastname",
+                shipping_contact_mobile: "0774444442",
+                shipping_contact_phone: "0774444443",
+            };
+            payable.startPayment(payment);
+        }
+    </script>
+</head>
+<body>
+    <button onclick="returnForm()" name="btnpay">PAY Now</button>
+</body>
+</html>
+```
+
+Listening to Payment Notification
+
+Payable Payment Gateway will send back to your website  notifies the payment status to the notify_url
