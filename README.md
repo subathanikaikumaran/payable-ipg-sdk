@@ -341,10 +341,12 @@ Format:
 
 ##### Send response to callback
 
-````{
+```
+{
     "statusCode": 1,
     "statusMessage": "SUCCESS",
     "invoiceNo": "INVvw5EA0d1pH",
     "woocommerceStatus": "Payment status updated",
     "payableTransactionId": "XXXXXXXX-XXX-XXXX-XXXX-XXXXXXXXX"
-}````
+}
+```
