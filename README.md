@@ -19,7 +19,6 @@ Payable Checkout URL:
 
 ```
 Sandbox: https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout-sandbox.js
-
 Live: Coming soon.
 ```
 
