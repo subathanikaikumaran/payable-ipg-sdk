@@ -1,10 +1,10 @@
 ### PAYable IPG SDK
 
-Payable IPG SDK helps to integrate the payment gateway of your website.
+PAYable IPG SDK helps to integrate the payment gateway of your website.
 
 <hr>
 
-### Version V1.0.2.1
+### Version V2.0.1.3
 
 #### The Payable Payment Gateway Integration
 
@@ -13,21 +13,28 @@ First, You need to get the Merchant Key and Merchant Token to integrate with IPG
 - Merchant Key:
 - Merchant Token:
 
-You can simply use an HTML Form to submit the below params to Payable Payment Gateway.When your customer click on payment/checkout button, It will be redirect to the Payable Payment Gateway. The Customer can confirm the payment by click on 'continue' button. Then your customer will be securely redirected to the commercial bank Payment Gateway and the customer can then enter the credentials (Card No / Cardholder name / CVV ) and process the payment there. Once the payment is made, The payable payment gateway will show the payment status to your customer and send the reciept to your customer's email.
+You can simply use an HTML Form to submit the below params to Payable Payment Gateway.When your customer clicks on the payment/checkout button, It will be redirected to the Payable Payment Gateway. The Customer can confirm the payment by click on the 'continue' button. Then your customer will be securely redirected to the commercial bank Payment Gateway and the customer can then enter the credentials (Card No / Cardholder name / CVV ) and process the payment there. Once the payment is made, The payable payment gateway will show the payment status to your customer and send the receipt to your customer's email.
+
+<hr>
+
+### Implementation
+
+<b>1.</b> Add Payable Checkout URL into your checkout page.
 
 Payable Checkout URL:
 
+```html
+Sandbox: https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout.js
 ```
-Sandbox: https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout-sandbox.js
-Live: Coming soon.
-```
+<b>2.</b> Create your checkout form with basic required fields.
 
-Required Form Parameters:
+<b>2.1.</b> Required Form Parameters:
 
 - `notify_url` - URL to callback the status of the payment (Needs to be a URL accessible on a public IP/domain)
 - `return_url` - URL to redirect users when success
 - `cancel_url` - URL to redirect users when cancelled
 - `merchant_key` - Payable Merchant ID [Given by PAYable]
+- `merchant_token` - Payable Merchant Token [Given by PAYable]
 - `currency_code` - Currency Code (LKR)
 - `check_value` - Generated hash value to ensure extra security
 - `order_description` - Small Description for the Order
@@ -44,7 +51,7 @@ Required Form Parameters:
 - `billing_address_country` - Billing Country (LKA)
 - `billing_address_postcode` - Billing Postal Code
 
-Optional Form Parameters:
+<b>2.2.</b> Optional Form Parameters:
 
 - `custom_1` - Merchant specific data, a Custom 1
 - `custom_2` - Merchant specific data, a Custom 2
@@ -69,208 +76,103 @@ Format:
 
 `UPPERCASE(SHA512[<merchant_key>|<invoice_id>|<amount>|<currency_code>|UPPERCASE(SHA512[<merchant_Token>])])`
 
-##### Sample HTML Form
+<b>2.3.</b> Sampe form :
+````html
+<form method="post">
+    <!-- Replace your merchant_key, merchant_token, notify_url, return_url, cancel_url and check_value -->
+    <input type="hidden" name="notify_url" id="notify_url" value="https://yoursite.com/payment/nortify" />
+    <input type="hidden" name="return_url" id="return_url" value="https://yoursite.com/payment/return" />
+    <input type="hidden" name="cancel_url" id="cancel_url" value="https://yoursite.com/payment/cancel" />
+    <input type="hidden" name="merchant_key" id="merchant_key" value="D75XXXXXXXXX" />
+    <input type="hidden" name="check_value" id="check_value" value="A8907A75XXXXXXXXXXXXXXXXXXX" />
+    <input type="text" name="merchant_token" id="merchant_token" value="ADXXXXXXXXXXXXXXX" />
+    <input type="hidden" name="custom_1" id="custom_1" value="test value" />
+    <input type="hidden" name="custom_2" id="custom_2" value="test value" />
+    <h3>Payment Details</h3>
+    <input type="text" name="invoice_id" id="invoice_id" value="INV0002301" />
+    <input type="text" name="order_description" id="order_description" value="Payment for abc Fashion" />
+    <input type="text" name="amount" id="amount" value="999.12" />
+    <input type="hidden" name="currency_code" id="currency_code" value="LKR" />
+    <h3>Customer Details</h3>
+    <input type="text" name="customer_first_name" id="customer_first_name" value="Shakthi" />
+    <input type="text" name="customer_last_name" id="customer_last_name" value="Elon" />
+    <input type="text" name="customer_mobile_phone" id="customer_mobile_phone" value="94XXXXXXXXX" />
+    <input type="text" name="customer_phone" id="customer_phone" value="94XXXXXXXXX" />
+    <input type="email" name="customer_email" id="customer_email" value="testbillmail@gmail.com" />
+    <h3>Billing Details</h3>
+    <input type="text" name="billing_address_street" id="billing_address_street" value="154" />
+    <input type="text" name="billing_address_street2" id="billing_address_street2" value="Main Road" />
+    <input type="text" name="billing_address_company" id="billing_address_company" value="Test" />
+    <input type="text" name="billing_address_city" id="billing_address_city" value="Vavuniya" />
+    <input type="text" name="billing_address_province" id="billing_address_province" value="North Province" />
+    <input type="hidden" name="billing_address_country" id="billing_address_country" value="LKA" />
+    <input type="text" name="billing_address_postcode" id="billing_address_postcode" value="43000" />
+    <h3>Shipping Details</h3>
+    <input type="text" name="shipping_contact_first_name" id="shipping_contact_first_name" value="Kumar" />
+    <input type="text" name="shipping_contact_last_name" id="shipping_contact_last_name" value="Shiva" />
+    <input type="text" name="shipping_contact_phone" id="shipping_contact_phone" value="94XXXXXXXXX" />
+    <input type="text" name="shipping_contact_mobile" id="shipping_contact_mobile" value="94XXXXXXXXX" />
+    <input type="email" name="shipping_contact_email" id="shipping_contact_email" value="testshipmail@gmail.com" />
+    <input type="text" name="shipping_address_company" id="shipping_address_company" value="Payable" />
+    <input type="text" name="shipping_address_street" id="shipping_address_street" value="Main Street" />
+    <input type="text" name="shipping_address_street2" id="shipping_address_street2" value="Temple Road" />
+    <input type="text" name="shipping_address_city" id="shipping_address_city" value="Colombo" />
+    <input type="text" name="shipping_address_province" id="shipping_address_province" value="western province" />
+    <input type="hidden" name="shipping_address_country" id="shipping_address_country" value="LKA" />
+    <input type="text" name="shipping_address_postcode" id="shipping_address_postcode" value="40000" />
+    <input type="submit" value="PAY Now">
+</form>
+   ````
+
+<b>3.</b> Communicate with PAYable SDK.
+
+<b>3.1.</b> Submit your form json data into `payable.startPayment()`.
+
+```javascript
+payable.startPayment(form_jsondata);
 
 ```
-<html>
-<head>
-    <title>Karl Fashion</title>
-    <script src="https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout-sandbox.js"></script>
-</head>
+<b>3.2.</b> Payament related Error details.
 
-<body>
-    <form method="post">
-        <!-- Replace your merchant_key,notify_url,return_url,cancel_url and check_value -->
-        <input type="hidden" name="notify_url" id="notify_url" value="https://yoursite.com/payment/nortify" />
-        <input type="hidden" name="return_url" id="return_url" value="https://yoursite.com/payment/return" />
-        <input type="hidden" name="cancel_url" id="cancel_url" value="https://yoursite.com/payment/cancel" />
-        <input type="hidden" name="merchant_key" id="merchant_key" value="D75XXXXXXXXX" />
-        <input type="hidden" name="check_value" id="check_value" value="A8907A75XXXXXXXXXXXXXXXXXXX" />
-        <input type="hidden" name="custom_1" id="custom_1" value="test value" />
-        <input type="hidden" name="custom_2" id="custom_2" value="test value" />
+You can get the error details from the `payable.onError`. Error will be field validation (code : 3009) and other common error (code : 3008).
 
-        <h3>Payment Details</h3>
-        <input type="text" name="invoice_id" id="invoice_id" value="INV0002301" />
-        <input type="text" name="order_description" id="order_description" value="Payment for abc Fashion" />
-        <input type="text" name="amount" id="amount" value="999.12" />
-        <input type="hidden" name="currency_code" id="currency_code" value="LKR" />
-
-        <h3>Customer Details</h3>
-        <input type="text" name="customer_first_name" id="customer_first_name" value="Shakthi" />
-        <input type="text" name="customer_last_name" id="customer_last_name" value="Elon" />
-        <input type="text" name="customer_mobile_phone" id="customer_mobile_phone" value="94XXXXXXXXX" />
-        <input type="text" name="customer_phone" id="customer_phone" value="94XXXXXXXXX" />
-        <input type="email" name="customer_email" id="customer_email" value="testbillmail@gmail.com" />
-
-        <h3>Billing Details</h3>
-        <input type="text" name="billing_address_street" id="billing_address_street" value="154" />
-        <input type="text" name="billing_address_street2" id="billing_address_street2" value="Main Road" />
-        <input type="text" name="billing_address_company" id="billing_address_company" value="Test" />
-        <input type="text" name="billing_address_city" id="billing_address_city" value="Vavuniya" />
-        <input type="text" name="billing_address_province" id="billing_address_province" value="North Province" />
-        <input type="hidden" name="billing_address_country" id="billing_address_country" value="LKA" />
-        <input type="text" name="billing_address_postcode" id="billing_address_postcode" value="43000" />
-
-        <h3>Shipping Details</h3>
-        <input type="text" name="shipping_contact_first_name" id="shipping_contact_first_name" value="Kumar" />
-        <input type="text" name="shipping_contact_last_name" id="shipping_contact_last_name" value="Shiva" />
-        <input type="text" name="shipping_contact_phone" id="shipping_contact_phone" value="94XXXXXXXXX" />
-        <input type="text" name="shipping_contact_mobile" id="shipping_contact_mobile" value="94XXXXXXXXX" />
-        <input type="email" name="shipping_contact_email" id="shipping_contact_email" value="testshipmail@gmail.com" />
-        <input type="text" name="shipping_address_company" id="shipping_address_company" value="Payable" />
-        <input type="text" name="shipping_address_street" id="shipping_address_street" value="Main Street" />
-        <input type="text" name="shipping_address_street2" id="shipping_address_street2" value="Temple Road" />
-        <input type="text" name="shipping_address_city" id="shipping_address_city" value="Colombo" />
-        <input type="text" name="shipping_address_province" id="shipping_address_province" value="western province" />
-        <input type="hidden" name="shipping_address_country" id="shipping_address_country" value="LKA" />
-        <input type="text" name="shipping_address_postcode" id="shipping_address_postcode" value="40000" />
-
-        <input type="submit" value="PAY Now">
-    </form>
-</body>
-</html>
-```
-
-Submit your form json data into Payable
-
-```
-    function returnForm(form_jsondata) {
-        payable.startPayment(form_jsondata);
-    }
-
-```
-
-##### Listening to Payable Payment Gateway
-
-Once you connect to Payable Payment Gateway, You can listen sdk response.
-
-```
-    window.addEventListener('load', function() {
-
-    });
-
-```
-
-As soon as the payment is processed, You can get the payment status.
-
-```
-   payable.onCompleted = function onCompleted(data) {
-        console.log("Payment completed")
-    };
-
-```
-
-If the payment gateway dismissed you can get the connection status.
-
-```
-   payable.onDismissed = function onDismissed() {
-        log("Payment Cancel");
-    };
-
-```
-
-You can get the error details from `onError`. Error will be field validation (3009), Gateway callback error (3008) and timeout error (3007).
-
-```
+```javascript
    payable.onError = function onError(error) {
         if (error.code === 3009) { // field validation error
             error.fields.forEach((field) => {
                 console.log(field.error)
             });
         }
-        if (error.code === 3008) { // mpgs error callback
-            console.log(error)
-        }
-        if (error.code === 3007) { // timeout error
-            console.log(error)
+        if (error.code === 3008) { // other common error
+            console.log(error.error)
         }
     };
 
 ```
 
-##### Sample Code
+<b>3.3.</b> Listening to Payable Payment Gateway
+
+Once you connect to Payable Payment Gateway, You can listen to sdk with `payable.onCompleted` and `payable.onDismissed`. As soon as the payment is processed, You can get the payment process status.
+
+```javascript
+   payable.onCompleted = function onCompleted(data) {
+        console.log("Payment Process Completed")
+    };
 
 ```
-<html>
-<head>
-    <title>ABC Fashion</title>
-    <script src="https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout-sandbox.js"></script>
-    <script>
-        window.addEventListener('load', function() {
 
-            payable.onCompleted = function onCompleted(data) {
-                console.log("Payment completed");
-            };
+If the payment gateway dismissed you can get the connection status.
 
-            payable.onDismissed = function onDismissed() {
-                console.log("Payment Cancel");
-            };
+```javascript
+   payable.onDismissed = function onDismissed() {
+        log("Payment Process Canceled");
+    };
 
-
-            payable.onError = function onError(error) {
-                if (error.code === 3009) { // field validation error
-                    error.fields.forEach((field) => {
-                        console.log(field.error)
-                    });
-                }
-                if (error.code === 3008) { // mpgs error callback
-                    console.log(error)
-                }
-                if (error.code === 3007) { // timeout error
-                    console.log(error)
-                }
-            };
-        });
-
-        function returnForm() {
-            var payment = {                
-                cancel_url: "https://yoursite.com/payment/cancel",
-                return_url: "https://yoursite.com/payment/return",
-                notify_url: "https://yoursite.com/payment/nortify",
-                merchant_key: "D7XXXXXXXXX",
-                check_value: "C6FXXXXXXXXXXXXXXXXXXXXXX",
-                amount: "59.91",
-                invoice_id: "INVvw5EA0d1pH",            
-                order_description: "Payment for abc Fashion",
-                currency_code: "LKR",
-                custom_1: "customYuDSFk5Z1O",
-                custom_2: "test2",
-                customer_email: "testmail@gmail.com",
-                customer_first_name: "Shakthi",
-                customer_last_name: "Elon",
-                customer_mobile_phone: "07XXXXXXXX",
-                customer_phone: "07XXXXXXXX",
-                billing_address_city: "Vavuniya",
-                billing_address_company: "Pay Shop",
-                billing_address_country: "LKA",
-                billing_address_postcode: "43000",
-                billing_address_province: "North Province",
-                billing_address_street: "154",
-                billing_address_street2: "Koomankulam", 
-                shipping_address_city: "Colombo",
-                shipping_address_company: "Payable",
-                shipping_address_country: "LKA",
-                shipping_address_postcode: "43000",
-                shipping_address_province: "western province",
-                shipping_address_street: "Main street",
-                shipping_address_street2: "Temple road",
-                shipping_contact_email: "testshipmail@gmail.com",
-                shipping_contact_first_name: "Kumaran",
-                shipping_contact_last_name: "Test Lastname",
-                shipping_contact_mobile: "07XXXXXXXX",
-                shipping_contact_phone: "07XXXXXXXX",
-            };
-            payable.startPayment(payment);
-        }
-    </script>
-</head>
-<body>
-    <button onclick="returnForm()" name="btnpay">PAY Now</button>
-</body>
-</html>
 ```
 
-#### Payment Notification
+<hr> 
+
+#### Listen Payment Notification Data
 
 Payable Payment Gateway will send back to your website notifies the payment status to the `notify_url`. You need to get the request and send the response.
 
@@ -287,7 +189,7 @@ your script on `notify_url` & then show the payment status to the customer in th
 
 ##### Server callback Json
 
-```
+```json
 {
     "merchantKey": "SXXXXXXXX",
     "payableOrderId": "oid-XXXXXXXX-XXX-XXXX-XXXX-XXXX",
@@ -334,18 +236,94 @@ If the customer made the payment by VISA or MASTER credit/debit card, following 
 - `cardNumber` - Masked card number (Ex: ************0008)
 - `checkValue` - combination of merchantKey, payableOrderId, payableTransactionId, payableAmount, payableCurrency, invoiceId, statusCode parameter set in a predefined sequence given by PAYable which then encrypted with merchantToken (a unique Secret value for the Merchant which was shared by PAYable) using SHA-512. 
 
-Format:
+    Format:
 
-`UPPERCASE(SHA512[<MerchantKey>|<payableOrderId>|<payableTransactionId>|<payableAmount>|<payableCurrency>|<invoiceId>|<statusCode>|UPPERCASE(SHA512[<MerchantToken>])])`
+    `UPPERCASE(SHA512[<MerchantKey>|<payableOrderId>|<payableTransactionId>|<payableAmount>|<payableCurrency>|<invoiceId>|<statusCode>|UPPERCASE(SHA512[<MerchantToken>])])`
 
 ##### Send response to callback
 
-```
+```json
 {
-    "statusCode": 1,
-    "statusMessage": "SUCCESS",
-    "invoiceNo": "INVvw5EA0d1pH",
-    "woocommerceStatus": "Payment status updated",
-    "payableTransactionId": "XXXXXXXX-XXX-XXXX-XXXX-XXXXXXXXX"
+    "Status":200
 }
 ```
+
+<hr> 
+
+##### Sample Code 
+
+```html
+<html>
+<head>
+    <title>ABC Fashion Shop</title>
+    <script src="https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            payable.onCompleted = function onCompleted(data) {
+                console.log("Payment Process Completed");
+            };
+            payable.onDismissed = function onDismissed() {
+                log("Payment Process Canceled");
+            };
+            payable.onError = function onError(error) {
+                if (error.code === 3009) { // field validation error
+                    error.fields.forEach((field) => {
+                        console.log(field.error)
+                    });
+                }
+                if (error.code === 3008) { 
+                    console.log(error.error)
+                }
+            };
+        });
+        function returnForm() {
+            var payment = {                
+                cancel_url: "https://yoursite.com/payment/cancel",
+                return_url: "https://yoursite.com/payment/return",
+                notify_url: "https://yoursite.com/payment/nortify",
+                merchant_key: "D7XXXXXXXXX",
+                merchant_token: "ADXXXXXXXXXXXX",
+                check_value: "C6FXXXXXXXXXXXXXXXXXXXXXX",
+                amount: "59.91",
+                invoice_id: "INVvw5EA0d1pH",            
+                order_description: "Payment for ABC Fashion Shop",
+                currency_code: "LKR",
+                custom_1: "customYuDSFk5Z1O",
+                custom_2: "test2",
+                customer_email: "testmail@gmail.com",
+                customer_first_name: "Shakthi",
+                customer_last_name: "Elon",
+                customer_mobile_phone: "07XXXXXXXX",
+                customer_phone: "07XXXXXXXX",
+                billing_address_city: "Vavuniya",
+                billing_address_company: "Pay Shop",
+                billing_address_country: "LKA",
+                billing_address_postcode: "43000",
+                billing_address_province: "North Province",
+                billing_address_street: "154",
+                billing_address_street2: "Koomankulam", 
+                shipping_address_city: "Colombo",
+                shipping_address_company: "Payable",
+                shipping_address_country: "LKA",
+                shipping_address_postcode: "43000",
+                shipping_address_province: "western province",
+                shipping_address_street: "Main street",
+                shipping_address_street2: "Temple road",
+                shipping_contact_email: "testshipmail@gmail.com",
+                shipping_contact_first_name: "Kumaran",
+                shipping_contact_last_name: "Test Lastname",
+                shipping_contact_mobile: "07XXXXXXXX",
+                shipping_contact_phone: "07XXXXXXXX",
+            };
+            payable.startPayment(payment);
+        }
+    </script>
+</head>
+<body>
+    <button onclick="returnForm()" name="btnpay">PAY Now</button>
+</body>
+</html>
+```
+
+
+PAYable Payment Gateway Integration
