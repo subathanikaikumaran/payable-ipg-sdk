@@ -8,12 +8,12 @@ PAYable IPG SDK helps to integrate the payment gateway of your website.
 
 #### The Payable Payment Gateway Integration
 
-First, You need to get the Merchant Key and Merchant Token to integrate with IPG SDK from Payable.
+First, You need to get the Merchant Key and Merchant Token to integrate with the IPG SDK from Payable.
 
 - Merchant Key:
 - Merchant Token:
 
-You can simply use an HTML Form to submit the below params to Payable Payment Gateway.When your customer clicks on the payment/checkout button, It will be redirected to the Payable Payment Gateway. The Customer can confirm the payment by click on the 'continue' button. Then your customer will be securely redirected to the commercial bank Payment Gateway and the customer can then enter the credentials (Card No / Cardholder name / CVV ) and process the payment there. Once the payment is made, The payable payment gateway will show the payment status to your customer and send the receipt to your customer's email.
+You can simply use an HTML Form to submit the below params to Payable Payment Gateway.When your customer clicks on the payment/checkout button, It will be redirected to the Payable Payment Gateway. The Customer can confirm the payment by clicking on the 'continue' button. Then your customer will be securely redirected to the commercial bank Payment Gateway and the customer can then enter the credentials (Card No / Cardholder name / CVV ) and process the payment there. Once the payment is made, The payable payment gateway will show the payment status to your customer and send the receipt to your customer's email.
 
 <hr>
 
@@ -34,7 +34,6 @@ Sandbox: https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout.js
 - `return_url` - URL to redirect users when success
 - `cancel_url` - URL to redirect users when cancelled
 - `merchant_key` - Payable Merchant ID [Given by PAYable]
-- `merchant_token` - Payable Merchant Token [Given by PAYable]
 - `currency_code` - Currency Code (LKR)
 - `check_value` - Generated hash value to ensure extra security
 - `order_description` - Small Description for the Order
@@ -79,13 +78,12 @@ Format:
 <b>2.3.</b> Sampe form :
 ````html
 <form method="post">
-    <!-- Replace your merchant_key, merchant_token, notify_url, return_url, cancel_url and check_value -->
+    <!-- Replace your merchant_key, notify_url, return_url, cancel_url and check_value -->
     <input type="hidden" name="notify_url" id="notify_url" value="https://yoursite.com/payment/nortify" />
     <input type="hidden" name="return_url" id="return_url" value="https://yoursite.com/payment/return" />
     <input type="hidden" name="cancel_url" id="cancel_url" value="https://yoursite.com/payment/cancel" />
     <input type="hidden" name="merchant_key" id="merchant_key" value="D75XXXXXXXXX" />
-    <input type="hidden" name="check_value" id="check_value" value="A8907A75XXXXXXXXXXXXXXXXXXX" />
-    <input type="text" name="merchant_token" id="merchant_token" value="ADXXXXXXXXXXXXXXX" />
+    <input type="hidden" name="check_value" id="check_value" value="A8907A75XXXXXXXXXXXXXXXXXXX" />    
     <input type="hidden" name="custom_1" id="custom_1" value="test value" />
     <input type="hidden" name="custom_2" id="custom_2" value="test value" />
     <h3>Payment Details</h3>
@@ -132,9 +130,9 @@ Format:
 payable.startPayment(form_jsondata);
 
 ```
-<b>3.2.</b> Payament related Error details.
+<b>3.2.</b> Payment related Error details.
 
-You can get the error details from the `payable.onError`. Error will be field validation (code : 3009) and other common error (code : 3008).
+You can get the error details from the `payable.onError`. Error will be field validation (code : 3009) and other common errors (code : 3008).
 
 ```javascript
    payable.onError = function onError(error) {
@@ -152,7 +150,7 @@ You can get the error details from the `payable.onError`. Error will be field va
 
 <b>3.3.</b> Listening to Payable Payment Gateway
 
-Once you connect to Payable Payment Gateway, You can listen to sdk with `payable.onCompleted` and `payable.onDismissed`. As soon as the payment is processed, You can get the payment process status.
+Once you connect to Payable Payment Gateway, You can listen to sdk with `payable.onCompleted`(The payment can be successful or failed) and `payable.onDismissed`(The user closes the payment without completing). As soon as the payment is processed, You can get the payment process status. `payable.onCompleted` .
 
 ```javascript
    payable.onCompleted = function onCompleted(data) {
@@ -172,7 +170,7 @@ If the payment gateway dismissed you can get the connection status.
 
 <hr> 
 
-#### Listen Payment Notification Data
+#### Listening to Payment Notification Data
 
 Payable Payment Gateway will send back to your website notifies the payment status to the `notify_url`. You need to get the request and send the response.
 
@@ -281,8 +279,7 @@ If the customer made the payment by VISA or MASTER credit/debit card, following 
                 cancel_url: "https://yoursite.com/payment/cancel",
                 return_url: "https://yoursite.com/payment/return",
                 notify_url: "https://yoursite.com/payment/nortify",
-                merchant_key: "D7XXXXXXXXX",
-                merchant_token: "ADXXXXXXXXXXXX",
+                merchant_key: "D7XXXXXXXXX",               
                 check_value: "C6FXXXXXXXXXXXXXXXXXXXXXX",
                 amount: "59.91",
                 invoice_id: "INVvw5EA0d1pH",            
