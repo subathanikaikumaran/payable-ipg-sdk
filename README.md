@@ -4,7 +4,7 @@ PAYable IPG SDK helps to integrate the payment gateway of your website.
 
 <hr>
 
-### Version V2.0.1.3
+### Version V2.0.1.4
 
 #### The Payable Payment Gateway Integration
 
