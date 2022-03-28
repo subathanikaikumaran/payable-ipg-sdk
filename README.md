@@ -22,9 +22,7 @@ You can simply use an HTML Form to submit the below params to Payable Payment Ga
 <b>1.</b> Add Payable Checkout URL into your checkout page.
 
 Payable Checkout URL:
-```command
-composer upgrade
-```
+
 ```html
 Sandbox: https://sandboxipgsdk.payable.lk/sdk/v2/payable-checkout.js
 ```
